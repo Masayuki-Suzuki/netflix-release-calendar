@@ -15,9 +15,9 @@ yarn serve
 yarn build
 ```
 
-### Run your unit tests
+### Run e2e tests
 ```
-yarn test:unit
+yarn test:e2e
 ```
 
 ### Lints and fixes files

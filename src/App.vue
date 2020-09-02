@@ -1,32 +1,37 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+<template lang="pug">
+.container
+    router-view(:key="$route.path" :netflix_data="netflixReleaseData")
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent, onBeforeMount, ref } from 'vue'
+import { JSONBin } from '@/types/jsonbin'
+import { useStore } from '@/store'
+import { ActionTypes } from '@/store/actions/action-types'
 
-#nav {
-  padding: 30px;
+export default defineComponent({
+    name: 'App',
+    setup() {
+        const store = useStore()
+        const netflixReleaseData = ref<JSONBin[]>([])
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+        onBeforeMount(async () => {
+            await store.dispatch(ActionTypes.GET_API_DATA)
+        })
 
-    &.router-link-exact-active {
-      color: #42b983;
+        return { netflixReleaseData }
     }
-  }
-}
+})
+</script>
+
+<style lang="sass">
+#app
+    font-family: Avenir, Helvetica, Arial, sans-serif
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    text-align: center
+    color: #2c3e50
+
+.container
+    padding: 32px
 </style>
