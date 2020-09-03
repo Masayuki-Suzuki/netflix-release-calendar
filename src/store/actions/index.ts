@@ -13,6 +13,7 @@ export default {
             }
         })
         const KeyedData = data.data.reduce((o, c) => ({ ...o, [c.launch_date]: c }), {})
+
         commit(MutationTypes.SET_API_DATA, KeyedData)
         return data.data
     }
